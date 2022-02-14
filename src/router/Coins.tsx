@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { replaceEqualDeep } from 'react-query/types/core/utils';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchCoins } from '../api';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -37,7 +39,7 @@ const Coin = styled.li`
   }
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -63,7 +65,7 @@ const Img = styled.img`
 `;
 
 const Coins = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  /*  const [loading, setLoading] = useState<boolean>(true);
   const [coins, setCoins] = useState<CoinInterface[]>([]);
 
   useEffect(() => {
@@ -73,17 +75,18 @@ const Coins = () => {
       setCoins(json.slice(0, 100));
       setLoading(false);
     })();
-  }, []);
+  }, []); */
+  const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoins);
   return (
     <Container>
       <Header>
         <Title>coins</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>'loading...'</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={coin.name}>
                 <Img
