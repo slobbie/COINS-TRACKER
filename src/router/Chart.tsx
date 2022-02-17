@@ -57,9 +57,24 @@ const Chart = ({ coinId }: ChartProps) => {
               labels: { show: false },
               axisTicks: { show: false },
               axisBorder: { show: false },
+              type: 'datetime',
+              categories: data?.map((data) => data.time_close),
             },
             stroke: {
               curve: 'smooth',
+            },
+            fill: {
+              type: 'gradient',
+              gradient: {
+                gradientToColors: ['#44bd32'],
+                stops: [0, 100],
+              },
+            },
+            colors: ['#0097e6'],
+            tooltip: {
+              y: {
+                formatter: (value) => `${value.toFixed(2)}`,
+              },
             },
           }}
         />
