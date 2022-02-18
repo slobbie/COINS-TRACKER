@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { useQuery } from 'react-query';
 import { replaceEqualDeep } from 'react-query/types/core/utils';
 import { Link } from 'react-router-dom';
@@ -22,7 +23,7 @@ const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 20px;

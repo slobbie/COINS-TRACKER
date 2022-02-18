@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { useQuery } from 'react-query';
 import {
   Route,
@@ -156,7 +157,10 @@ const Coin = () => {
   );
   const { isLoading: thickersLoading, data: tickersData } = useQuery<PriceData>(
     ['tickers', coinId],
-    () => fetchCoinTickers(coinId!)
+    () => fetchCoinTickers(coinId!),
+    {
+      refetchInterval: 5000,
+    }
   );
   /* 
   const [info, setInfo] = useState<InfoData>();
@@ -196,8 +200,8 @@ const Coin = () => {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? 'Yes' : 'No'}</span>
+              <span>Price:</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>

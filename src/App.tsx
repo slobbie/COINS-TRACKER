@@ -1,13 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 import AppRouter from './router/AppRouter';
-import { ReactQueryDevtools } from 'react-query/devtools';
-
+import { Helmet } from 'react-helmet';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './theme';
+import { useState } from 'react';
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
+del, dfn, em, img, ins, kbd, q, s, samp, 
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, menu, ol, ul, li,
@@ -66,13 +68,26 @@ a{
 `;
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => {
+    setIsDark(!isDark);
+  };
   return (
     <>
-      <GlobalStyle />
-      <AppRouter />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <button onClick={toggleDark}>Toggle mode</button>
+        <Helmet>
+          <title>Coin Tracker</title>
+        </Helmet>
+        <GlobalStyle />
+        <AppRouter />
+      </ThemeProvider>
+      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
     </>
   );
 }
 
 export default App;
+
+// 뒤로가기 버튼
+// 가격에 대한 정보 시각화
