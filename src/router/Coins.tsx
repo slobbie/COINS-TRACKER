@@ -65,7 +65,11 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-const Coins = () => {
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+const Coins = ({ toggleDark }: ICoinsProps) => {
   /*  const [loading, setLoading] = useState<boolean>(true);
   const [coins, setCoins] = useState<CoinInterface[]>([]);
 
@@ -82,6 +86,7 @@ const Coins = () => {
     <Container>
       <Header>
         <Title>coins</Title>
+        <button onClick={toggleDark}>Toggle mode</button>
       </Header>
       {isLoading ? (
         <Loader>'loading...'</Loader>
