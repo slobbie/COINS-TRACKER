@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { replaceEqualDeep } from 'react-query/types/core/utils';
 import { Link } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { fetchCoins } from '../api';
+import { isDarkAtom } from '../atoms';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -65,11 +67,9 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface ICoinsProps {
-  toggleDark: () => void;
-}
+interface ICoinsProps {}
 
-const Coins = ({ toggleDark }: ICoinsProps) => {
+const Coins = () => {
   /*  const [loading, setLoading] = useState<boolean>(true);
   const [coins, setCoins] = useState<CoinInterface[]>([]);
 
@@ -82,11 +82,14 @@ const Coins = ({ toggleDark }: ICoinsProps) => {
     })();
   }, []); */
   const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoins);
+  // recoil 로 상태의 value 값을 조절 할수 있는 함수 ex) setState
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   return (
     <Container>
       <Header>
         <Title>coins</Title>
-        <button onClick={toggleDark}>Toggle mode</button>
+        <button onClick={toggleDarkAtom}>Toggle mode</button>
       </Header>
       {isLoading ? (
         <Loader>'loading...'</Loader>

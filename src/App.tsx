@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from './atoms';
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
   html, body, div, span, applet, object, iframe,
@@ -68,10 +70,8 @@ a{
 `;
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => {
-    setIsDark(!isDark);
-  };
+  // atom 에 저장된 상태값을 불어오는 방법
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
@@ -79,7 +79,7 @@ function App() {
           <title>Coin Tracker</title>
         </Helmet>
         <GlobalStyle />
-        <AppRouter isDark={isDark} toggleDark={toggleDark} />
+        <AppRouter />
       </ThemeProvider>
       {/* <ReactQueryDevtools initialIsOpen={true} /> */}
     </>

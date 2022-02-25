@@ -144,11 +144,9 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-interface ICoinProps {
-  isDark: boolean;
-}
+interface ICoinProps {}
 
-const Coin = ({ isDark }: ICoinProps) => {
+const Coin = () => {
   const { coinId } = useParams<string>();
   const location = useLocation();
   const name = location.state as RouterState;
@@ -229,10 +227,7 @@ const Coin = ({ isDark }: ICoinProps) => {
           </Tabs>
           <Routes>
             <Route path='price' element={<Price />} />
-            <Route
-              path='chart'
-              element={<Chart isDark={isDark} coinId={coinId!} />}
-            />
+            <Route path='chart' element={<Chart coinId={coinId!} />} />
           </Routes>
         </>
       )}
