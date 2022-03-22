@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { useQuery } from 'react-query';
 import {
   Route,
@@ -12,7 +10,6 @@ import {
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
 import Chart from './Chart';
-import Price from './Price';
 
 interface RouterState {
   name: string;
@@ -124,7 +121,7 @@ const Description = styled.p`
 
 const Tabs = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   margin: 25px 0px;
   gap: 10px;
 `;
@@ -151,7 +148,6 @@ const Coin = () => {
   const location = useLocation();
   const name = location.state as RouterState;
 
-  const priceMatch = useMatch('/:coinId/price');
   const ChartMatch = useMatch('/:coinId/chart');
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ['info', coinId],
@@ -186,7 +182,9 @@ const Coin = () => {
   return (
     <Container>
       <Header>
-        <Title>{name ? name : loading ? 'Loading...' : infoData?.name}</Title>
+        <Link to='/'>
+          <Title>{name ? name : loading ? 'Loading...' : infoData?.name}</Title>
+        </Link>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -221,12 +219,8 @@ const Coin = () => {
             <Tab isActive={ChartMatch !== null}>
               <Link to='chart'>Chart</Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
-              <Link to='price'>Price</Link>
-            </Tab>
           </Tabs>
           <Routes>
-            <Route path='price' element={<Price />} />
             <Route path='chart' element={<Chart coinId={coinId!} />} />
           </Routes>
         </>

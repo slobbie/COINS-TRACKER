@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-
 import { useQuery } from 'react-query';
-import { replaceEqualDeep } from 'react-query/types/core/utils';
 import { Link } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -19,13 +16,14 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.textColor2};
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 20px;
@@ -67,6 +65,13 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
+const Toggle = styled.button`
+  border: none;
+  border-radius: 20px;
+  background-color: black;
+  color: #fff;
+`;
+
 interface ICoinsProps {}
 
 const Coins = () => {
@@ -89,7 +94,7 @@ const Coins = () => {
     <Container>
       <Header>
         <Title>coins</Title>
-        <button onClick={toggleDarkAtom}>Toggle mode</button>
+        <Toggle onClick={toggleDarkAtom}>Toggle mode</Toggle>
       </Header>
       {isLoading ? (
         <Loader>'loading...'</Loader>
